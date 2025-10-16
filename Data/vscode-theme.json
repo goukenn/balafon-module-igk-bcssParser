@@ -1,0 +1,83 @@
+{
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                    "source.bcss",
+                    "source.bview"
+                ],
+                "settings": {
+                    "foreground": "#2d7b8e"
+                }
+            },
+            {
+                "scope": [
+                    "meta.global.directive"
+                ],
+                "settings": {
+                    "foreground": "#C586C0"
+                }
+            },
+            {
+                "scope": [
+                    "operator.property",
+                    "property.css",
+                    "punctuation.operator"
+                ],
+                "settings": {
+                    "foreground": "#8e792d"
+                }
+            },
+            {
+                "scope": [
+                    "constant"
+                ],
+                "settings": {
+                    "foreground": "#14c6c9"
+                }
+            },
+            {
+                "scope": [
+                    "constant.color"
+                ],
+                "settings": {
+                    "foreground": "#c94e14"
+                }
+            },
+            {
+                "scope": [
+                    "constant.url",
+                    "punctuation.separator"
+                ],
+                "settings": {
+                    "foreground": "#ba14c9"
+                }
+            },
+            {
+                "scope": [
+                    "native.css.function.name",
+                    "punctuation.selector"
+                ],
+                "settings": {
+                    "foreground": "#DCDCAA"
+                }
+            },
+            {
+                "scope": [
+                    "native.css.type"
+                ],
+                "settings": {
+                    "foreground": "#b90e94"
+                }
+            },
+            {
+                "scope": [
+                    "native.css.type.id"
+                ],
+                "settings": {
+                    "foreground": "#b90e0e"
+                }
+            }
+        ]
+    }
+}

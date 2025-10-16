@@ -1,0 +1,13 @@
+# default-screen lg
+
+
+@root{
+    --bg-primary: red;
+}
+
+
+@def{
+    div.card{
+        color: var(--bg-primary)
+    }
+}

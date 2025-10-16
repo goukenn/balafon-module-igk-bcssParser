@@ -1,0 +1,33 @@
+<?php
+// @author: C.A.D. BONDJE DOUE
+// @file: %modules%/igk/bcssParser/.module.pinc
+// @date: 20240112 15:20:05
+namespace igk\bcssParser;
+
+use igk\bcssParser\System\IO\BcssFileHandler;
+use IGK\System\IO\FileHandler; 
+// + | -------------------------------------------------------
+// + | please use $reg closure var to register Module function 
+// + |
+
+ 
+FileHandler::Register('.bcss|'.FileHandler::FILE_CONTEXT_CSS, new BcssFileHandler);
+
+// + module definition
+return [
+//------------------------------------------------
+// define entry name space
+//
+"entry_NS"=>'igk\\bcssParser',
+
+//------------------------------------------------
+// version
+//
+"version"=>"1.0",
+
+//-------------------------------------------------
+// author
+//
+"author"=>"C.A.D. BONDJE DOUE"
+];
+
