@@ -953,12 +953,12 @@ class BcssParser
         $root[$k] = $vv;
     }
 
-    public function applyGlobalValue($v, BcssParser $parser = null, BcssStateInfo $state = null)
+    public function applyGlobalValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null)
     {
         $state->useGlobalStyleDefinition = true;
         $this->_bindStateValue($v, $parser, $state, 'sys');
     }
-    public function applyValue($v, BcssParser $parser = null, BcssStateInfo $state = null)
+    public function applyValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null)
     {
         $this->_bindStateValue($v, $parser, $state, 'th');
     }
@@ -973,7 +973,7 @@ class BcssParser
      * @return void 
      * @throws Exception 
      */
-    protected function _bindStateValue($v, BcssParser $parser = null, BcssStateInfo $state = null, $type = 'sys')
+    protected function _bindStateValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null, $type = 'sys')
     {
         if (!$state->def) {
             $state->def = $parser->_initStateDefinition();
