@@ -21,7 +21,7 @@ class BcssMultiDirective{
     {
         $v_p = $state->property;
         $v_v = $state->value;
-        $v_dirname = $state->directive_name;
+        $v_bckdirname = $state->directive_name;
         foreach($this->m_list as $k=>$v){
             $state->def = null;
             $state->directive_name = $k;
@@ -31,6 +31,7 @@ class BcssMultiDirective{
             $this->m_defs[$k] = $state->def;
             $state->updateRegistry();
         }
+        $state->directive_name = $v_bckdirname;
     }
     /**
      * store css defintion 

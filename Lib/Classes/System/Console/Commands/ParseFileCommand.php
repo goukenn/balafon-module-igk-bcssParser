@@ -24,6 +24,7 @@ class ParseFileCommand extends AppExecCommand{
 	];
 	var $usage='filename [option]';
 	public function exec($command, ?string $filename=null) { 
+		($filename && file_exists($filename)) || igk_die('missing filename');
 		$d = file_get_contents($filename);
 		$g = BcssParser::ParseFromContent($d, dirname($filename));
 		Logger::info("parsing : ".$filename);

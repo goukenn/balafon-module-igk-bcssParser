@@ -1117,7 +1117,7 @@ class BcssParser
                 $def->keylist = array_merge([$def->selector => $css], $def->keylist);
                 self::_MergePList($def->parent->keylist, $def->keylist);
             }
-            $this->_moveTop();
+            //$this->_moveTop();
         };
         if (($v_dir = $this->m_state->directive) instanceof BcssMultiDirective) {
             $v_dir->storeCssTheme($this, $fc);
