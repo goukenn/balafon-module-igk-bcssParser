@@ -24,5 +24,6 @@ class BcssTokens{
     const TOKEN_END_VALUE = 0xa;
     const TOKEN_ARRAY_EXPRESS = 0xb;
     const TOKEN_THEME_DEF = 0xc;
+    const TOKEN_PROPERTY = 0xd;
 
 }

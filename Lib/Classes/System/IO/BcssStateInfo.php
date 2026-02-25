@@ -66,6 +66,18 @@ class BcssStateInfo{
      * @var array
      */
     var $registerThemes = [];
+
+    /**
+     * disable token reset value
+     * @var ?bool
+     */
+    var $noResetValue;
+
+    /**
+     * skip white space
+     * @var mixed
+     */
+    var $skipWhiteSpace;
     /**
      * get selector 
      * @return string 

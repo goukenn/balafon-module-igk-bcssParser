@@ -17,6 +17,7 @@ use IGKException;
 use ReflectionException;
 
 ///<summary></summary>
+
 /**
  * 
  * @package igk\bcssParser\System\IO
@@ -26,11 +27,15 @@ class BcssParser
 {
     const TOKENS = '_:-.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const TOKENS_DIRECTIVE = '-.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const TOKENS_SELECTOR = ' >+:-.,0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' . "\n\t\r";
+    const TOKENS_SELECTOR = ' >+:-.,_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' . "\n\t\r";
     const DEFAULT_MEDIA_KEY = '@def';
     const CSS_PROPS_REGEX = "/^(--)?[\\w-]+\\b$/";
 
     private $m_directive_definitions;
+    /**
+     * 
+     * @var BcssSetup
+     */
     private $m_setup;
     private $m_supportThemes = [];
 
@@ -155,6 +160,14 @@ class BcssParser
                 $this->m_theme->getdef()->clear();
             // igk_die("missing merging default data");
         }
+        if ($roots = $this->m_setup->getRoots()){
+            // + | inject root reference
+            $r = & $this->m_theme->getRootReference();
+            array_map(function($v, $a)use(& $r){
+                $r[$a] = $v;
+            }, $roots, array_keys($roots));
+        }
+
         return $this->m_theme->get_css_def($minfile, $themeexport);
     }
     /**
@@ -204,9 +217,7 @@ class BcssParser
                 $this->default_theme = $value;
                 break;
             default:
-
                 $value = str_replace('-', '_', $value);
-
                 $this->m_setup->$setups = $value;
                 break;
         }
@@ -288,7 +299,20 @@ class BcssParser
                 }
                 $ch = '';
             }
+            if ($this->m_state->skipWhiteSpace){
+                if ($ch == ' ')
+                    $ch = '';
+                else{
+                    $this->m_state->skipWhiteSpace = false;
+                }
+            }
             switch ($ch) {
+                case '$': // incode font-property define in setup 
+                    $pos++;
+                    $n = self::_ReadName($content, $pos);
+                    $v_v = trim($v_v);
+                    $v_ltoken = [BcssTokens::TOKEN_PROPERTY, $n, &$v_v];
+                    break;
                 case '@':
                     $pos++;
                     $g = $ch . self::_ReadName($content, $pos);
@@ -308,7 +332,7 @@ class BcssParser
                         // + | --------------------------------------------------------
                         if (($line = strpos($content, "\n", $pos)) !== false) {
                             // load directive 
-                            $g = substr($content, $pos + 1, $line - $pos + 1);
+                            $g = substr($content, $pos + 1, $line - $pos - 1);
                             $this->_loadDescribeDirective(trim($g));
                             $pos = $line;
                         } else {
@@ -426,7 +450,11 @@ class BcssParser
                     $this->_handleToken($v_tokens,  [BcssTokens::TOKEN_VALUE, $v_v]);
                 }
                 $this->_handleToken($v_tokens, $v_ltoken);
-                $v_v = '';
+                if (!$this->m_state->noResetValue){
+                    $v_v = '';
+                } else{
+                    $this->m_state->noResetValue = false;
+                }
             } else {
                 $v_v .= $ch;
             }
@@ -446,10 +474,39 @@ class BcssParser
     {
         $this->m_state->popSelector();
     }
+    /**
+     * handle token defintion 
+     * @param mixed $token 
+     * @return void 
+     */
     public function handleToken($token)
     {
         $e = $token;
         switch ($e[0]) {
+            case BcssTokens::TOKEN_PROPERTY:
+                $n = $e[1];
+                $v_v = &$e[2];
+                $v = $this->m_setup->{$n};
+                if ($v) {
+                    $tdef = &$this->m_state->def->def;
+                    $p = $this->m_state->property;
+                    $s = ($v_v ? $v_v.' ' : '') . $v.' ';
+                    if ($tdef) {
+                        if ($p)
+                            $this->_updateValue($s); 
+                        else {
+                            $tck = array_keys($tdef);
+                            $p = $tck[count($tck) - 1]; 
+                            $tdef[$p] .= $s;                            
+                        }
+                        $v_v = $s;
+                        $this->m_state->property = $p;
+                        $this->m_state->value = $tdef[$p];
+                        $this->m_state->noResetValue = true;
+                        $this->m_state->skipWhiteSpace = true;
+                    }
+                }
+                break;
             case BcssTokens::TOKEN_BRANK:
                 if ($e[1] == '{') {
                     $this->m_state->depth++;
@@ -501,29 +558,8 @@ class BcssParser
                 break;
             case BcssTokens::TOKEN_VALUE:
             case BcssTokens::TOKEN_LITTERAL:
-                $this->m_state->value = $e[1];
+                $this->_updateValue($e[1]);
 
-                if ($this->m_state->scope_directive && self::IsScopedDirective($this->m_state->scope_directive)) {
-                    $fc = $this->m_state->scope_directive;
-                    $v = $this->m_state->value;
-                    if (is_array($fc)) {
-                        $callback = array_slice($fc, 0, 2);
-                        call_user_func_array($callback, [$v, $this, $this->m_state]);
-                    } else {
-                        $fc->loadScope($v, $this, $this->m_state);
-                    }
-                    $this->m_state->clearScope();
-                    $this->m_state->value = null;
-                    break;
-                }
-                if ($this->m_state->directive && ($this->m_state->mode == 0)) {
-                    $this->_handleGlobalStateDirective();
-                    break;
-                }
-                if ($this->m_state->mode == 1) {
-                    // store property value 
-                    $this->_updateStateDirective();
-                }
                 break;
             case BcssTokens::TOKEN_END_SELECTOR:
                 if ($this->m_state->mode == 0) {
@@ -549,6 +585,32 @@ class BcssParser
         }
         if ($this->m_listener) {
             $this->m_listener->handle($token);
+        }
+    }
+    private function _updateValue(string $value)
+    {
+        $this->m_state->value = $value;
+
+        if ($this->m_state->scope_directive && self::IsScopedDirective($this->m_state->scope_directive)) {
+            $fc = $this->m_state->scope_directive;
+            $v = $this->m_state->value;
+            if (is_array($fc)) {
+                $callback = array_slice($fc, 0, 2);
+                call_user_func_array($callback, [$v, $this, $this->m_state]);
+            } else {
+                $fc->loadScope($v, $this, $this->m_state);
+            }
+            $this->m_state->clearScope();
+            $this->m_state->value = null;
+            return;
+        }
+        if ($this->m_state->directive && ($this->m_state->mode == 0)) {
+            $this->_handleGlobalStateDirective();
+            return;
+        }
+        if ($this->m_state->mode == 1) {
+            // store property value 
+            $this->_updateStateDirective();
         }
     }
     private static function _MergePList(&$list, array $data)
@@ -594,7 +656,7 @@ class BcssParser
                 }
                 call_user_func_array($fc, $args);
                 $this->m_state->mode = 0;
-            } else if (is_callable($v_dir)){
+            } else if (is_callable($v_dir)) {
                 $v_dir($this, $this->m_state);
             }
         } else {
@@ -770,7 +832,7 @@ class BcssParser
         }
         $v = trim($v);
         if (empty($v)) {
-            igk_die("not a valid selector/property : " . $v);
+            igk_die("[bcssParser] - not a valid selector/property : " . $v);
         }
         $rm_sub = 0;
         if (false !== strrpos($v, $v_pmark, -1)) {
@@ -781,10 +843,6 @@ class BcssParser
                     $rm_sub = 1;
                 }
             }
-            // else {
-            //     $v = substr($v, 0, $cpos);
-            //     $pos = $v_root + $cpos - 1;
-            // }
         }
         $pos -= $rm_sub;
         return $v;
@@ -1044,7 +1102,7 @@ class BcssParser
      */
     private function _storeCss()
     {
-        $fc = function($def){
+        $fc = function ($def) {
             ksort($def->def);
             $css = '';
             foreach ($def->def as $k => $v) {
@@ -1066,8 +1124,8 @@ class BcssParser
                 self::_MergePList($def->parent->keylist, $def->keylist);
             }
         };
-        if ( ($v_dir = $this->m_state->directive) instanceof BcssMultiDirective){
-            $v_dir->storeCssTheme($this, $fc, function(){
+        if (($v_dir = $this->m_state->directive) instanceof BcssMultiDirective) {
+            $v_dir->storeCssTheme($this, $fc, function () {
                 $this->_moveTop();
             });
             $this->_moveTop();
