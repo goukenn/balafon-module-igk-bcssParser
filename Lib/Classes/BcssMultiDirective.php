@@ -32,7 +32,13 @@ class BcssMultiDirective{
             $state->updateRegistry();
         }
     }
-    public function storeCssTheme(BcssParser $parser, $fc){
+    /**
+     * store css defintion 
+     * @param BcssParser $parser 
+     * @param callable $fc 
+     * @return void 
+     */
+    public function storeCssTheme(BcssParser $parser, callable $fc, afterEachDefinition){
         foreach($this->m_defs as $k=>$v){
             $fc($v);
         }

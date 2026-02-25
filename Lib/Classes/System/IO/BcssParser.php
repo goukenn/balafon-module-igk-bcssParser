@@ -1086,14 +1086,8 @@ class BcssParser
      */
     private function _moveTop()
     {
-        $this->m_state->updateRegistry();
-        // if ($def = $this->m_state->def) {
-        //     if ($def->themeProperty && !isset($this->m_state->registerThemes[$def->themeProperty])) {
-        //         $this->m_state->registerThemes[$def->themeProperty] = $def;
-        //     }
-        //     $this->m_state->def = $def->parent;
-        // } else
-        //     $this->m_state->def = null;  
+        $this->m_state->updateRegistry($this->m_state);
+  
         $this->_popSelector();
     }
     /**
@@ -1123,11 +1117,10 @@ class BcssParser
                 $def->keylist = array_merge([$def->selector => $css], $def->keylist);
                 self::_MergePList($def->parent->keylist, $def->keylist);
             }
+            $this->_moveTop();
         };
         if (($v_dir = $this->m_state->directive) instanceof BcssMultiDirective) {
-            $v_dir->storeCssTheme($this, $fc, function () {
-                $this->_moveTop();
-            });
+            $v_dir->storeCssTheme($this, $fc);
             $this->_moveTop();
             return;
         }

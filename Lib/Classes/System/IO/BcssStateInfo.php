@@ -113,9 +113,9 @@ class BcssStateInfo{
     /**
      * 
      */
-    public function updateRegistry(){
+    public function updateRegistry($state){
         if ($def = $this->def) {
-            if ($def->themeProperty && !isset($this->m_state->registerThemes[$def->themeProperty])) {
+            if ($def->themeProperty && !isset($state->registerThemes[$def->themeProperty])) {
                 $this->registerThemes[$def->themeProperty] = $def;
             }
             $this->def = $def->parent;
