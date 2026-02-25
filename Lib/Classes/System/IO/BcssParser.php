@@ -1086,7 +1086,7 @@ class BcssParser
      */
     private function _moveTop()
     {
-        $this->m_state->updateRegistry($this->m_state);
+        $this->m_state->updateRegistry();
   
         $this->_popSelector();
     }

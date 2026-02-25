@@ -38,7 +38,7 @@ class BcssMultiDirective{
      * @param callable $fc 
      * @return void 
      */
-    public function storeCssTheme(BcssParser $parser, callable $fc, afterEachDefinition){
+    public function storeCssTheme(BcssParser $parser, callable $fc){
         foreach($this->m_defs as $k=>$v){
             $fc($v);
         }
