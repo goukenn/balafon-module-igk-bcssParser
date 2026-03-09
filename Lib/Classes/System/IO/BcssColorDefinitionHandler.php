@@ -7,13 +7,20 @@ namespace igk\bcssParser\System\IO;
 use IGK\System\Html\Css\CssParser;
 use function igk_resources_gets as __;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\System\IO
 * @author C.A.D. BONDJE DOUE
 */
 class BcssColorDefinitionHandler implements IBcssDirectiveHandler{
 
+    /**
+    * auto generate doc.
+    * @param BcssParser $parser
+    * @param string $content
+    * @param mixed & $pos
+    */
     public function handle(BcssParser $parser, string $content, &$pos) { 
         $v_tpos = strpos($content, "{", $pos);
         $v_theme = null;

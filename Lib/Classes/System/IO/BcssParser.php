@@ -19,24 +19,59 @@ use ReflectionException;
 ///<summary></summary>
 
 /**
- * 
- * @package igk\bcssParser\System\IO
- * @author C.A.D. BONDJE DOUE
- */
+* auto generate doc.
+* @package igk\bcssParser\System\IO
+* @author C.A.D. BONDJE DOUE
+*/
 class BcssParser
 {
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     const TOKENS = '_:-.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     const TOKENS_DIRECTIVE = '-.0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     const TOKENS_SELECTOR = ' >+:-.,_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' . "\n\t\r";
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     const DEFAULT_MEDIA_KEY = '@def';
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     const CSS_PROPS_REGEX = "/^(--)?[\\w-]+\\b$/";
 
-    private $m_directive_definitions;
     /**
-     * 
-     * @var BcssSetup
-     */
+    * auto generate doc.
+    * @var mixed
+    */
+    private $m_directive_definitions;
+
+    /**
+    * auto generate doc.
+    * @var BcssSetup
+    */
     private $m_setup;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     private $m_supportThemes = [];
 
     /**
@@ -66,26 +101,29 @@ class BcssParser
      * @var ?string
      */
     var $directory;
+
     /**
-     * 
-     * @var ?IBcssTokenListener
-     */
+    * auto generate doc.
+    * @var ?IBcssTokenListener
+    */
     private $m_listener;
 
     /**
-     * 
-     * @var mixed
-     */
+    * auto generate doc.
+    * @var mixed
+    */
     private $m_source;
+
     /**
-     * 
-     * @var ?array
-     */
+    * auto generate doc.
+    * @var ?array
+    */
     private $m_definitions;
+
     /**
-     * 
-     * @var HtmlDocTheme
-     */
+    * auto generate doc.
+    * @var HtmlDocTheme
+    */
     private $m_theme;
     /**
      * store the state information 
@@ -94,9 +132,10 @@ class BcssParser
     private $m_state;
 
     /**
-     * 
-     * @return HtmlDocTheme 
-     */
+    * auto generate doc.
+    * @return HtmlDocTheme
+    */
+
     public function getTheme()
     {
         return $this->m_theme;
@@ -106,10 +145,16 @@ class BcssParser
      * @param string $themename 
      * @return bool 
      */
+
     public function isSupportTheme(string $themename)
     {
         return in_array($themename, $this->m_supportThemes);
     }
+
+    /**
+    * .ctr
+    * @return
+    */
     private function __construct()
     {
         $this->m_theme = new HtmlDocTheme(null, 'bcssTheme');
@@ -117,6 +162,11 @@ class BcssParser
         $this->m_setup = new BcssSetup;
         $this->m_definitions = [];
     }
+
+    /**
+    * auto generate doc.
+    * @param string $filename
+    */
     public static function ParseFormFile(string $filename)
     {
         return self::ParseFromContent(file_get_contents($filename), dirname($filename));
@@ -127,6 +177,7 @@ class BcssParser
      * @return static 
      * @throws IGKException 
      */
+
     public static function ParseFromContent(string $content, ?string $basedir = null, bool $allow_print_format = false)
     {
         $s = new static;
@@ -136,6 +187,10 @@ class BcssParser
         self::$sm_allow_printf_format = false;
         return $s;
     }
+
+    /**
+    * auto generate doc.
+    */
     public function clear()
     {
         $this->m_definitions = [];
@@ -144,6 +199,7 @@ class BcssParser
      * render css definition
      * @return string
      */
+
     public function render(bool $minfile = false, bool $themeexport = false): string
     {
         if ($this->m_state->useGlobalStyleDefinition) {
@@ -174,6 +230,7 @@ class BcssParser
      * get current source 
      * @return mixed 
      */
+
     public function getCurrentSource()
     {
         return $this->m_source;
@@ -182,6 +239,7 @@ class BcssParser
      * get token definition
      * @return null|array 
      */
+
     public function getTokens()
     {
         return $this->m_definitions;
@@ -232,6 +290,14 @@ class BcssParser
     {
         return StringUtility::ReadLine($content, $pos);
     }
+
+    /**
+    * auto generate doc.
+    * @param string $content
+    * @param mixed & $g
+    * @param mixed & $pos
+    * @return
+    */
     private static function _TreatLitteral(string $content, &$g, &$pos)
     {
 
@@ -251,6 +317,12 @@ class BcssParser
             $pos = $nv;
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param string $l
+    * @return
+    */
     public static function IsMediaDirective(string $l)
     {
         return in_array(ltrim($l, '@'), explode('|', 'def|xsm-screen|sm-screen|lg-screen|xlg-screen|xxlg-screen|xsm|sm|lg|xlg|xxlg'));
@@ -260,6 +332,7 @@ class BcssParser
      * @param string $content 
      * @return void 
      */
+
     public function load(string $content)
     {
         $ln = strlen($content);
@@ -461,15 +534,33 @@ class BcssParser
             $pos++;
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed & $v_token_list
+    * @param array $token
+    * @return
+    */
     private function _handleToken(&$v_token_list, array $token)
     {
         $v_token_list[] = $token;
         $this->handleToken($token);
     }
+
+    /**
+    * auto generate doc.
+    * @param string $value
+    * @return
+    */
     private function _pushSelector(string $value)
     {
         $this->m_state->pushSelector($value);
     }
+
+    /**
+    * auto generate doc.
+    * @return
+    */
     private function _popSelector()
     {
         $this->m_state->popSelector();
@@ -479,6 +570,7 @@ class BcssParser
      * @param mixed $token 
      * @return void 
      */
+
     public function handleToken($token)
     {
         $e = $token;
@@ -587,6 +679,12 @@ class BcssParser
             $this->m_listener->handle($token);
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param string $value
+    * @return
+    */
     private function _updateValue(string $value)
     {
         $this->m_state->value = $value;
@@ -613,6 +711,13 @@ class BcssParser
             $this->_updateStateDirective();
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed & $list
+    * @param array $data
+    * @return
+    */
     private static function _MergePList(&$list, array $data)
     {
         foreach ($data as $k => $v) {
@@ -623,6 +728,11 @@ class BcssParser
             }
         }
     }
+
+    /**
+    * auto generate doc.
+    * @return
+    */
     private function _handleGlobalStateDirective()
     {
         if (is_array($this->m_state->directive)) {
@@ -633,6 +743,12 @@ class BcssParser
             }
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed $state
+    * @return
+    */
     private static function _CleanState($state)
     {
         $state->directive = null;
@@ -640,6 +756,11 @@ class BcssParser
         $state->value = null;
         $state->property = null;
     }
+
+    /**
+    * auto generate doc.
+    * @return
+    */
     private function _updateStateDirective()
     {
         // update lobal directive
@@ -667,10 +788,21 @@ class BcssParser
             $this->m_state->directive_name = $bck;
         }
     }
+
+    /**
+    * auto generate doc.
+    * @return
+    */
     private function _clearStateValue()
     {
         $this->m_state->value = null;
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed $directive
+    * @return bool
+    */
     public static function IsScopedDirective($directive): bool
     {
         return $directive && is_array($directive) && (igk_getv($directive, 2) == 'scoped');
@@ -726,6 +858,13 @@ class BcssParser
         $v_sb = trim($v_sb);
         return $v_sb;
     }
+
+    /**
+    * auto generate doc.
+    * @param string $content
+    * @param mixed & $pos
+    * @return
+    */
     private static function _ReadName(string $content, &$pos)
     {
         $v = '';
@@ -853,6 +992,7 @@ class BcssParser
      * @return array|object|IBcssDirectiveHandler
      * @throws IGKException 
      */
+
     public function getDirectiveCallback($name)
     {
         $definition = &$this->m_directive_definitions;
@@ -873,6 +1013,11 @@ class BcssParser
 
         return igk_getv($definition, $name) ?? BcssDirectiveFactory::Create($name);
     }
+
+    /**
+    * auto generate doc.
+    * @return array
+    */
     protected function initDirectiveDefinition(): array
     {
         return [
@@ -912,6 +1057,7 @@ class BcssParser
      * @throws ArgumentTypeNotValidException 
      * @throws ReflectionException 
      */
+
     public function import(string $file)
     {
         if (!$this->directory) {
@@ -924,11 +1070,22 @@ class BcssParser
             $this->m_theme->load_data($g->m_theme->to_array());
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed $k
+    * @param mixed $v
+    */
     public function storeColorDefinition($k, $v)
     {
         $this->m_theme->cl[$k] = $v;
     }
 
+    /**
+    * auto generate doc.
+    * @param BcssParser $reader
+    * @param BcssStateInfo $state
+    */
     public function storeDefinition(BcssParser $reader, BcssStateInfo $state)
     {
         if (!$state->def) {
@@ -1003,6 +1160,7 @@ class BcssParser
      * @param mixed $v 
      * @return void 
      */
+
     public function storeRootDefinition(BcssParser $reader, BcssStateInfo $v)
     {
         $k = $v->property;
@@ -1011,11 +1169,24 @@ class BcssParser
         $root[$k] = $vv;
     }
 
+    /**
+    * auto generate doc.
+    * @param mixed $v
+    * @param null|BcssParser $parser
+    * @param null|BcssStateInfo $state
+    */
     public function applyGlobalValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null)
     {
         $state->useGlobalStyleDefinition = true;
         $this->_bindStateValue($v, $parser, $state, 'sys');
     }
+
+    /**
+    * auto generate doc.
+    * @param mixed $v
+    * @param null|BcssParser $parser
+    * @param null|BcssStateInfo $state
+    */
     public function applyValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null)
     {
         $this->_bindStateValue($v, $parser, $state, 'th');
@@ -1031,6 +1202,7 @@ class BcssParser
      * @return void 
      * @throws Exception 
      */
+
     protected function _bindStateValue($v, ?BcssParser $parser = null, ?BcssStateInfo $state = null, $type = 'sys')
     {
         if (!$state->def) {
@@ -1152,12 +1324,12 @@ class BcssParser
         // }
         $this->_moveTop();
     }
+
     /**
-     * 
-     * @param mixed $name 
-     * @param mixed $styles 
-     * @return void 
-     */
+    * auto generate doc.
+    * @return void
+    */
+
     function updateThemeProperties($name, $styles)
     {
         $pname = str_replace('-', '_', $name);

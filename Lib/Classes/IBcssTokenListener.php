@@ -4,8 +4,9 @@
 // @date: 20240112 16:42:17
 namespace igk\bcssParser;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser
 * @author C.A.D. BONDJE DOUE
 */

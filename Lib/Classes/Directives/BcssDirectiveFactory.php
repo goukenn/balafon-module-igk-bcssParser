@@ -8,10 +8,16 @@ use igk\bcssParser\System\IO\BcssParser;
 use igk\bcssParser\System\IO\IBcssDirectiveHandler;
 use IGK\Helper\StringUtility;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\Directives
 * @author C.A.D. BONDJE DOUE
+*/
+
+/**
+* auto generate doc.
+* @package igk\bcssParser\Directives
 */
 abstract class BcssDirectiveFactory implements IBcssDirectiveHandler{
     /**
@@ -19,13 +25,18 @@ abstract class BcssDirectiveFactory implements IBcssDirectiveHandler{
      * @var mixed
      */
     protected $type;
+
+    /**
+    * .ctr
+    */
     protected function __construct(){
     }
+
     /**
-     * 
-     * @param string $name 
-     * @return object|null 
-     */
+    * auto generate doc.
+    * @return object|null
+    */
+
     public static function Create(string $name){
         $name = StringUtility::CamelClassName(ltrim($name, '@'));
         $cl = __NAMESPACE__."\\".ucfirst($name)."Directive";
@@ -34,6 +45,13 @@ abstract class BcssDirectiveFactory implements IBcssDirectiveHandler{
         }
         return null;
     }
+
+    /**
+    * auto generate doc.
+    * @param BcssParser $parser
+    * @param string $content
+    * @param mixed & $pos
+    */
     public function handle(BcssParser $parser, string $content, &$pos) { 
         empty($this->type) ?? igk_die("type is empty");
         list($key, $cl) = BcssParsingUtility::ReadBlock($content, $pos);

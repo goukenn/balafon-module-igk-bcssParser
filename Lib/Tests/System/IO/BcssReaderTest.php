@@ -8,13 +8,18 @@ use igk\bcssParser\System\IO\BcssParser;
 use IGK\Tests\Controllers\ModuleBaseTestCase;
 
 ///<summary></summary>
+
 /**
- * 
- * @package igk\bcssParser\Tests\System\IO
- * @author C.A.D. BONDJE DOUE
- */
+* auto generate doc.
+* @package igk\bcssParser\Tests\System\IO
+* @author C.A.D. BONDJE DOUE
+*/
 class BcssReaderTest extends ModuleBaseTestCase
 {
+
+    /**
+    * auto generate doc.
+    */
     public function test_read_directive()
     {
         $d = <<<'BCSS'
@@ -33,6 +38,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_read_composite_a()
     {
         $d = <<<'BCSS'
@@ -54,6 +62,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_read_composite_with_3()
     {
         $d = <<<'BCSS'
@@ -78,7 +89,9 @@ BCSS;
         );
     }
 
-
+    /**
+    * auto generate doc.
+    */
     public function test_read_css_media()
     {
         $d = <<<'BCSS'
@@ -100,6 +113,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_read_color()
     {
         $d = <<<'BCSS'
@@ -119,6 +135,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function _test_read_root_definition()
     {
         $d = <<<'BCSS'
@@ -143,6 +162,10 @@ BCSS;
             $g->render(true, true)
         );
     }
+
+    /**
+    * auto generate doc.
+    */
     public function test_apply_directive()
     {
         $d = <<<'BCSS'
@@ -170,6 +193,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_apply_directive_with_combination()
     {
         $d = <<<'BCSS'
@@ -195,6 +221,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_parse_speudo_class()
     {
         $d = <<<'BCSS'
@@ -214,6 +243,9 @@ BCSS;
         );
     }
 
+    /**
+    * auto generate doc.
+    */
     public function test_parse_speudo_class_escaped()
     {
         $d = <<<'BCSS'
@@ -232,6 +264,10 @@ BCSS;
             $g->render(true, true)
         );
     }
+
+    /**
+    * auto generate doc.
+    */
     public function test_parse_directive_speudo_class_escaped()
     {
         $d = <<<'BCSS'

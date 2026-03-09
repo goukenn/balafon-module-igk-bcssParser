@@ -6,10 +6,16 @@ namespace igk\bcssParser\System\IO;
 
 
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser
 * @author C.A.D. BONDJE DOUE
+*/
+
+/**
+* auto generate doc.
+* @package igk\bcssParser\System\IO
 */
 class BcssStateInfo{
 
@@ -17,6 +23,11 @@ class BcssStateInfo{
      * use global flag definition
      */
     var $useGlobalStyleDefinition = false;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $depth = 0;
     /**
      * reading mode type \
@@ -56,10 +67,28 @@ class BcssStateInfo{
      */
     var $property;
 
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     private $m_selectors = [];
 
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $directive_name;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $scope_directive_name;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $def; // css definition
     /**
      * store media query names
@@ -82,18 +111,32 @@ class BcssStateInfo{
      * get selector 
      * @return string 
      */
+
     public function getSelector():string{
         return implode(' ', $this->m_selectors);
     }
+
+    /**
+    * auto generate doc.
+    * @param string $value
+    */
     public function pushSelector(string $value){
         array_push($this->m_selectors, $value);
         $this->value = null;
     }
+
+    /**
+    * auto generate doc.
+    */
     public function popSelector(){
         $this->value = null;
         return array_pop($this->m_selectors);
     }
 
+    /**
+    * auto generate doc.
+    * @return ?string
+    */
     public function currentSelector():?string{
         if (
             $this->m_selectors
@@ -106,13 +149,16 @@ class BcssStateInfo{
      * clear scoped value
      * @return void 
      */
+
     public function clearScope(){
         $this->scope_directive = null;
         $this->scope_directive_name = null;
     }
+
     /**
-     * 
-     */
+    * auto generate doc.
+    */
+
     public function updateRegistry(){
         if ($def = $this->def) {
             if ($def->themeProperty && !isset($this->registerThemes[$def->themeProperty])) {

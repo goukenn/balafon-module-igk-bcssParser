@@ -37,7 +37,7 @@ div.card{
     span{
         --font-size: 2em;
         display: inline-block;
-        font-size:  var(--font-size);
+        font-size:  $font-size;
     } 
 }
 ```

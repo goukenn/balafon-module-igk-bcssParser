@@ -4,13 +4,19 @@
 namespace igk\bcssParser\Tests;
 use IGK\Tests\BaseTestCase;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\Tests
 * @author C.A.D. BONDJE DOUE
 */
 abstract class ModuleTestBase extends BaseTestCase{
-	public static function setUpBeforeClass(): void{
+
+    /**
+    * auto generate doc.
+    * @return void
+    */
+    public static function setUpBeforeClass(): void{
 	   igk_require_module(\igk\bcssParser::class);
 	}
 }

@@ -7,13 +7,26 @@ use igk\bcssParser\Helper\BcssParsingUtility;
 use igk\bcssParser\System\IO\BcssParser;
 use IGK\System\Html\Css\CssUtils;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\Directives
 * @author C.A.D. BONDJE DOUE
 */
 class ListDirective extends BcssDirectiveFactory{
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     protected $type = '@list';
+
+    /**
+    * auto generate doc.
+    * @param BcssParser $parser
+    * @param string $content
+    * @param mixed & $pos
+    */
     public function handle(BcssParser $parser, string $content, &$pos)
     {
         //BcssParser::ListRendering(true);
@@ -35,6 +48,12 @@ class ListDirective extends BcssDirectiveFactory{
             }
         }
     }
+
+    /**
+    * auto generate doc.
+    * @param string $g
+    * @return
+    */
     private function _treat(string $g){
         return str_replace("\\%s",'%s',$g);
     }

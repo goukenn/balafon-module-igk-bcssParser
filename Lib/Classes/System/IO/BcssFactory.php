@@ -6,8 +6,9 @@ namespace igk\bcssParser\System\IO;
 
 
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\System\IO
 * @author C.A.D. BONDJE DOUE
 */

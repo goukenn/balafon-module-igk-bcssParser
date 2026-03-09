@@ -10,20 +10,52 @@ use IGK\System\Console\Logger;
  
 
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\System\Console\Commands
 * @author C.A.D. BONDJE DOUE
 */
 class ParseFileCommand extends AppExecCommand{
-	var $command="--bcss:parse";
-	var $desc="parse bcss to css";
-	var $category="bcss";
-	var $options=[
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
+    var $command="--bcss:parse";
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
+    var $desc="parse bcss to css";
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
+    var $category="bcss";
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
+    var $options=[
 		"--merge-def"=>"enable media screen merge"
 	];
-	var $usage='filename [option]';
-	public function exec($command, ?string $filename=null) { 
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
+    var $usage='filename [option]';
+
+    /**
+    * auto generate doc.
+    * @param mixed $command
+    * @param null|string $filename
+    */
+    public function exec($command, ?string $filename=null) { 
 		($filename && file_exists($filename)) || igk_die('missing filename');
 		$d = file_get_contents($filename);
 		$g = BcssParser::ParseFromContent($d, dirname($filename));

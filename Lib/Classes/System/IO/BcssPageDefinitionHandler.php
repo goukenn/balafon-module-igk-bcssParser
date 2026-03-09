@@ -9,12 +9,18 @@ use IGK\System\Html\Css\CssParser;
 use IGKMedia;
 
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\System\IO
 * @author C.A.D. BONDJE DOUE
 */
 class BcssPageDefinitionHandler implements IBcssDirectiveHandler{
+
+    /**
+    * auto generate doc.
+    * @param mixed $cl
+    */
     public static function ConvertDefinition($cl){
       $def = [];
       $out = [];
@@ -28,6 +34,13 @@ class BcssPageDefinitionHandler implements IBcssDirectiveHandler{
       ksort($out); 
       return $out;
     }
+
+    /**
+    * auto generate doc.
+    * @param BcssParser $parser
+    * @param string $content
+    * @param mixed & $pos
+    */
     public function handle(BcssParser $parser, string $content, &$pos) {
         $cps = strpos($content, "{", $pos);
         $key = trim(substr($content, $pos, $cps-$pos));  
@@ -40,7 +53,14 @@ class BcssPageDefinitionHandler implements IBcssDirectiveHandler{
         $this->storeData($parser->getTheme(), $key, $cl);
        
      }
-     protected function storeData($theme, $key, $cl){
+
+    /**
+    * auto generate doc.
+    * @param mixed $theme
+    * @param mixed $key
+    * @param mixed $cl
+    */
+    protected function storeData($theme, $key, $cl){
         $g = $theme->reg_media('@page '.$key);  
         $g->load_data(['props'=> $cl]);
      }

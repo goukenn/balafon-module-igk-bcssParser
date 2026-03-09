@@ -6,12 +6,20 @@ namespace igk\bcssParser\Directives;
 use igk\bcssParser\System\IO\BcssParser;
 use IGK\Helper\StringUtility;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\Directives
 * @author C.A.D. BONDJE DOUE
 */
 class NamespaceDirective extends BcssDirectiveFactory{
+
+    /**
+    * auto generate doc.
+    * @param BcssParser $parser
+    * @param string $content
+    * @param mixed & $pos
+    */
     public function handle(BcssParser $parser, string $content, &$pos) {
         $ns = trim(StringUtility::ReadLine($content, $pos));
         $parser->getTheme()->setNamespace($ns);

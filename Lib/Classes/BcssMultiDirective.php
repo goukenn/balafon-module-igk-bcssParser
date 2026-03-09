@@ -6,17 +6,40 @@ namespace igk\bcssParser;
 use igk\bcssParser\System\IO\BcssParser;
 use igk\bcssParser\System\IO\IBcssDirectiveHandler;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser
 * @author C.A.D. BONDJE DOUE
 */
 class BcssMultiDirective{
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     private $m_list = [];
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     private $m_defs = [];
+
+    /**
+    * auto generate doc.
+    * @param string $name
+    * @param mixed $definition
+    */
     public function add(string $name, $definition){
         $this->m_list[$name] = $definition;
     }
+
+    /**
+    * Called when an object is used as a function.
+    * @param mixed $parser
+    * @param mixed $state
+    */
     public function __invoke($parser, $state)
     {
         $v_p = $state->property;
@@ -39,6 +62,7 @@ class BcssMultiDirective{
      * @param callable $fc 
      * @return void 
      */
+
     public function storeCssTheme(BcssParser $parser, callable $fc){
         foreach($this->m_defs as $k=>$v){
             $fc($v);

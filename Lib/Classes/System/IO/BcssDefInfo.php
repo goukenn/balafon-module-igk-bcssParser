@@ -12,14 +12,35 @@ namespace igk\bcssParser\System\IO;
 * @author C.A.D. BONDJE DOUE
 */
 class BcssDefInfo{
+
     /**
-     * 
-     * @var ?BcssDefInfo
-     */
+    * auto generate doc.
+    * @var ?BcssDefInfo
+    */
     var $parent;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $def = [];
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $themeProperty;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $selector;
+
+    /**
+    * auto generate doc.
+    * @var mixed
+    */
     var $definitions;
     /**
      * store array key list definition 

@@ -8,20 +8,22 @@ use igk\bcssParser\System\IO\BcssParser;
 use IGK\System\Html\Css\CssParser;
 use IGKException;
 ///<summary></summary>
+
 /**
-* 
+* auto generate doc.
 * @package igk\bcssParser\Helper
 * @author C.A.D. BONDJE DOUE
 */
+
+/**
+* auto generate doc.
+* @package igk\bcssParser\Helper
+*/
 class BcssParsingUtility{
+
     /**
-     * 
-     * @param string $content 
-     * @param mixed &$pos 
-     * @return (string|array)[] 
-     * @throws IGKException 
-     * @throws Exception 
-     */
+    * auto generate doc.
+    */
     public static function ReadBlock(string $content, & $pos){
         $cps = strpos($content, "{", $pos);
         $key = trim(substr($content, $pos, $cps-$pos));  
